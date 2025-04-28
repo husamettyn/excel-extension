@@ -21,7 +21,7 @@ function loadLibrary(src, globalVarName, callback, errorCallback) {
 
 function initExtension() {
     const fileInput = document.getElementById('fileInput');
-    const splitButton = document.getElementById('splitButton');
+    const splitIntoDifferentSheets = document.getElementById('splitIntoDifferentSheets');
     const fileNameSpan = document.getElementById('fileName');
     const statusMessage = document.getElementById('statusMessage');
     const progressArea = document.getElementById('progressArea');
@@ -37,19 +37,19 @@ function initExtension() {
         if (files.length > 0) {
             selectedFile = files[0];
             fileNameSpan.textContent = selectedFile.name;
-            splitButton.disabled = false;
+            splitIntoDifferentSheets.disabled = false;
             statusMessage.textContent = '';
             progressArea.style.display = 'none';
             downloadArea.style.display = 'none';
         } else {
             selectedFile = null;
             fileNameSpan.textContent = 'No file chosen';
-            splitButton.disabled = true;
+            splitIntoDifferentSheets.disabled = true;
             statusMessage.textContent = '';
         }
     });
 
-    splitButton.addEventListener('click', () => {
+    splitIntoDifferentSheets.addEventListener('click', () => {
         if (!selectedFile) {
             statusMessage.textContent = 'Error: No file selected.';
             console.error('Split button clicked without a file selected.');
@@ -58,11 +58,11 @@ function initExtension() {
         if (typeof JSZip === 'undefined') {
             statusMessage.textContent = 'Error: JSZip library not loaded.';
             console.error('JSZip not loaded.');
-            splitButton.disabled = false;
+            splitIntoDifferentSheets.disabled = false;
             return;
         }
 
-        splitButton.disabled = true;
+        splitIntoDifferentSheets.disabled = true;
         statusMessage.textContent = 'Reading file...';
         progressArea.style.display = 'none';
         downloadArea.style.display = 'none';
@@ -90,7 +90,7 @@ function initExtension() {
                 const keys = Object.keys(groups);
                 if (keys.length === 0) {
                     statusMessage.textContent = 'No data rows to split.';
-                    splitButton.disabled = false;
+                    splitIntoDifferentSheets.disabled = false;
                     return;
                 }
 
@@ -121,33 +121,28 @@ function initExtension() {
                 }).catch(err => {
                     console.error('Error generating zip:', err);
                     statusMessage.textContent = `Error generating zip: ${err.message}`;
-                    splitButton.disabled = false;
+                    splitIntoDifferentSheets.disabled = false;
                 });
 
             } catch (error) {
                 console.error('Error processing file:', error);
                 statusMessage.textContent = `Error: ${error.message}`;
-                splitButton.disabled = false;
+                splitIntoDifferentSheets.disabled = false;
             }
         };
         reader.onerror = (e) => {
             console.error('Error reading file:', e);
             statusMessage.textContent = `Error reading file: ${e.target.error.name}`;
-            splitButton.disabled = false;
+            splitIntoDifferentSheets.disabled = false;
         };
         reader.readAsArrayBuffer(selectedFile);
     });
 
-    splitButton.disabled = true;
+    splitIntoDifferentSheets.disabled = true;
     progressArea.style.display = 'none';
     downloadArea.style.display = 'none';
     console.log('Extension initialized after SheetJS load.');
 }
 
-// On DOMContentLoaded, ensure SheetJS is loaded, then initialize
-document.addEventListener('DOMContentLoaded', function() {
-    loadLibrary('https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js', 'XLSX', initExtension, (err) => {
-        const statusMessage = document.getElementById('statusMessage');
-        if (statusMessage) statusMessage.textContent = 'Error loading SheetJS library.';
-    });
-});
+// Initialize the extension logic after the DOM is fully loaded
+document.addEventListener('DOMContentLoaded', initExtension);
