@@ -3,12 +3,26 @@
   "name": "Excel Extension",
   "version": "1.0",
   "description": "A basic Chrome extension for interacting with Excel files.",
+  "minimum_chrome_version": "114",
   "action": {
-    "default_popup": "popup.html"
+    "default_title": "T3 Excel Extension"
+  },
+  "side_panel": {
+    "default_path": "main.html",
+    "default_icon": {
+      "16": "images/icon16.png",
+      "48": "images/icon48.png",
+      "128": "images/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
   },
   "permissions": [
     "scripting",
-    "activeTab"
+    "activeTab",
+    "sidePanel"
   ],
   "icons": {
     "16": "images/icon16.png",

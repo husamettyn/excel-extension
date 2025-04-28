@@ -21,6 +21,7 @@ function loadLibrary(src, globalVarName, callback, errorCallback) {
 
 function initExtension() {
     const fileInput = document.getElementById('fileInput');
+    const splitIntoDifferentFiles = document.getElementById('splitIntoDifferentFiles');
     const splitIntoDifferentSheets = document.getElementById('splitIntoDifferentSheets');
     const fileNameSpan = document.getElementById('fileName');
     const statusMessage = document.getElementById('statusMessage');
@@ -37,19 +38,19 @@ function initExtension() {
         if (files.length > 0) {
             selectedFile = files[0];
             fileNameSpan.textContent = selectedFile.name;
-            splitIntoDifferentSheets.disabled = false;
+            splitIntoDifferentFiles.disabled = false;
             statusMessage.textContent = '';
             progressArea.style.display = 'none';
             downloadArea.style.display = 'none';
         } else {
             selectedFile = null;
             fileNameSpan.textContent = 'No file chosen';
-            splitIntoDifferentSheets.disabled = true;
+            splitIntoDifferentFiles.disabled = true;
             statusMessage.textContent = '';
         }
     });
 
-    splitIntoDifferentSheets.addEventListener('click', () => {
+    splitIntoDifferentFiles.addEventListener('click', () => {
         if (!selectedFile) {
             statusMessage.textContent = 'Error: No file selected.';
             console.error('Split button clicked without a file selected.');
@@ -58,11 +59,11 @@ function initExtension() {
         if (typeof JSZip === 'undefined') {
             statusMessage.textContent = 'Error: JSZip library not loaded.';
             console.error('JSZip not loaded.');
-            splitIntoDifferentSheets.disabled = false;
+            splitIntoDifferentFiles.disabled = false;
             return;
         }
 
-        splitIntoDifferentSheets.disabled = true;
+        splitIntoDifferentFiles.disabled = true;
         statusMessage.textContent = 'Reading file...';
         progressArea.style.display = 'none';
         downloadArea.style.display = 'none';
@@ -90,7 +91,7 @@ function initExtension() {
                 const keys = Object.keys(groups);
                 if (keys.length === 0) {
                     statusMessage.textContent = 'No data rows to split.';
-                    splitIntoDifferentSheets.disabled = false;
+                    splitIntoDifferentFiles.disabled = false;
                     return;
                 }
 
@@ -121,24 +122,28 @@ function initExtension() {
                 }).catch(err => {
                     console.error('Error generating zip:', err);
                     statusMessage.textContent = `Error generating zip: ${err.message}`;
-                    splitIntoDifferentSheets.disabled = false;
+                    splitIntoDifferentFiles.disabled = false;
                 });
 
             } catch (error) {
                 console.error('Error processing file:', error);
                 statusMessage.textContent = `Error: ${error.message}`;
-                splitIntoDifferentSheets.disabled = false;
+                splitIntoDifferentFiles.disabled = false;
             }
         };
         reader.onerror = (e) => {
             console.error('Error reading file:', e);
             statusMessage.textContent = `Error reading file: ${e.target.error.name}`;
-            splitIntoDifferentSheets.disabled = false;
+            splitIntoDifferentFiles.disabled = false;
         };
         reader.readAsArrayBuffer(selectedFile);
     });
 
-    splitIntoDifferentSheets.disabled = true;
+    splitIntoDifferentSheets.addEventListener('click', () => {
+        // 
+    });
+
+    splitIntoDifferentFiles.disabled = true;
     progressArea.style.display = 'none';
     downloadArea.style.display = 'none';
     console.log('Extension initialized after SheetJS load.');
