@@ -16,3 +16,6 @@ This Chrome extension allows you to split an Excel file (.xlsx) into multiple se
 1.  Click the extension icon (usually located next to the address bar) to open the popup.
 2.  Click the "Choose File" button and select the Excel file (.xlsx) you want to process.
 3.  The extension will process the file. Once complete, it will automatically download a ZIP file containing the split Excel files. Each file within the ZIP will be named according to the unique value from the first column of the original file.
+
+to install: npm install tailwindcss @tailwindcss/cli
+for tailwind: npx @tailwindcss/cli -i ./popup.css -o ./tailwind.css --watch
