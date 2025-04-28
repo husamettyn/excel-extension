@@ -31,6 +31,29 @@ function initExtension() {
     const downloadArea = document.getElementById('downloadArea');
     const downloadLink = document.getElementById('downloadLink');
 
+    const root = document.documentElement;
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon   = document.getElementById('themeIcon');
+    const refreshBtn  = document.getElementById('refreshButton');
+  
+    // 1) Apply saved theme
+    if (localStorage.getItem('theme') === 'dark') {
+      root.classList.add('dark');
+      themeIcon.textContent = '☀️';
+    }
+  
+    // 2) Toggle dark/light
+    themeToggle.addEventListener('click', () => {
+      const isDark = root.classList.toggle('dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      themeIcon.textContent = isDark ? '☀️' : '🌙';
+    });
+  
+    // 3) Refresh panel (reset state)
+    refreshBtn.addEventListener('click', () => {
+      location.reload();
+    });
+
     let selectedFile = null;
 
     fileInput.addEventListener('change', (event) => {
