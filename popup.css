@@ -1,0 +1,87 @@
+body {
+    font-family: sans-serif;
+    width: 350px; /* Approximate width */
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Spacing between elements */
+}
+
+p {
+    margin: 0 0 5px 0; /* Reduced bottom margin for instruction */
+}
+
+.file-input-area {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.file-input-label {
+    padding: 5px 10px;
+    background-color: #eee;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.file-input-label:hover {
+    background-color: #ddd;
+}
+
+#fileName {
+    font-style: italic;
+    color: #555;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex-grow: 1; /* Allow filename to take available space */
+}
+
+button {
+    padding: 8px 15px;
+    cursor: pointer;
+    align-self: center; /* Center the button */
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+#progressArea,
+#downloadArea,
+#statusMessage {
+    display: none; /* Hide these elements initially */
+    margin-top: 10px;
+}
+
+#progressArea {
+    display: flex; /* Overridden by JS later to show */
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+}
+
+#progressBar {
+    width: 100%;
+}
+
+#statusMessage {
+    margin-top: 5px;
+    font-size: 0.9em;
+    color: red; /* Default to error color, can be changed by JS */
+}
+
+#statusMessage.success {
+    color: green;
+}
+
+#downloadArea {
+     text-align: center;
+}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Excel Splitter</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="container">
+        <p>Select Excel file (.xlsx, .xls) to split by first column:</p>
+
+        <div class="file-input-area">
+            <input type="file" id="fileInput" accept=".xlsx, .xls">
+            <label for="fileInput" class="file-input-label">Choose File</label>
+            <span id="fileName">No file chosen</span>
+        </div>
+
+        <button id="splitButton" disabled>Split File</button>
+
+        <div id="progressArea">
+            <label for="progressBar">Processing:</label>
+            <progress id="progressBar" value="0" max="100"></progress>
+            <span id="progressText">0%</span>
+        </div>
+
+        <div id="statusMessage" class="status"></div>
+
+        <div id="downloadArea">
+            <a href="#" id="downloadLink" download="split_files.zip">Download Split Files (.zip)</a>
+        </div>
+    </div>
+
+    <script src="lib/xlsx.full.min.js"></script>
+    <script src="popup.js"></script> </body>
+</html>
