@@ -1,6 +1,9 @@
+@import "tailwindcss";
+
 body {
     font-family: sans-serif;
-    width: 400px; /* Approximate width */
+    max-width: 400px; /* Maximum width */
+    margin: 0 auto; /* Center horizontally */
     padding: 10px;
     box-sizing: border-box;
 }
